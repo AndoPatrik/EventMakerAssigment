@@ -5,10 +5,21 @@
     xmlns:local="using:EventMakerAssigment"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:EventMakerAssigment.ViewModel"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <viewModel:LoginViewModel/>
+    </Page.DataContext>
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button Width="200" Height="100" Content="Login" Click="Button_Click"></Button>
+        <StackPanel>
+            <TextBox Text="{Binding CurrentUser.Id}" Width="400" Height="50" Margin="0,100,0,0" PlaceholderText="Type in your ID"></TextBox>
+        </StackPanel>
+        <StackPanel>
+            <PasswordBox Password="{Binding CurrentUser.Password}" Width="400" Height="50" Margin="0,200,0,0" PlaceholderText="Type in your PW"></PasswordBox>
+        </StackPanel>
+        <Button Width="200" Height="100" Content="Login" Margin="650,0,0,0" Click="Button_Click"></Button>
 
     </Grid>
 </Page>

@@ -28,9 +28,9 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Content="ADD" Click="Button_Click"></Button>
+        <Button Content="ADD" Command="{Binding GoToCreatePageCommand}"></Button>
         <Button Margin="100,0,0,0" Content="Delete" Command="{Binding DeleteCommand}"></Button>
-
+        <Button Margin="200,0,0,0" Content="LogOut" Command="{Binding BackCommand}"></Button>
     </Grid>
 
 </Page>

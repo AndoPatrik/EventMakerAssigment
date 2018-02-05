@@ -6,12 +6,16 @@ using EventMakerAssigment.Annotations;
 using EventMakerAssigment.Common;
 using EventMakerAssigment.Handler;
 using EventMakerAssigment.Model;
+using EventMakerAssigment.View;
+
 
 namespace EventMakerAssigment.ViewModel
 {
     public class EventViewModel :INotifyPropertyChanged
     {
         #region InstanceFields
+
+        private readonly FrameNavigationClass _frameNavigation;
         private ObservableCollection<Event> _events;
         private Event _selectedEvent;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -22,6 +26,7 @@ namespace EventMakerAssigment.ViewModel
         private string _name;
         private string _description;
         private string _place;
+
         #endregion
 
         #region Constructor(s)
@@ -33,11 +38,17 @@ namespace EventMakerAssigment.ViewModel
             _selectedEvent = new Event();
             AddCommand = new RelayCommand(EventHandler.CreateEvent);
             DeleteCommand = new RelayCommand(EventHandler.DeleteEvent);
+            BackCommand = new RelayCommand(DoBackToLogin);
+            GoToCreatePageCommand = new RelayCommand(NavigateToCreateEventPage);
+            _frameNavigation = new FrameNavigationClass();
         }
         #endregion
 
         #region Properties
+        internal FrameNavigationClass FrameNavigation => _frameNavigation;
         public EventCatalogSingleton EventCatalogSingleton { get; set; }
+        public RelayCommand BackCommand { get; set; }
+        public RelayCommand GoToCreatePageCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
         public ObservableCollection<Event> Events { get => _events; set => _events = value; }
@@ -94,9 +105,22 @@ namespace EventMakerAssigment.ViewModel
                 OnPropertyChanged(nameof(Place));
             }
         }
+
+       
         #endregion
 
         #region Method(s)
+
+        public void DoBackToLogin()
+        {
+            _frameNavigation.ActivateFrameNavigation(typeof(MainPage));
+        }
+
+        public void NavigateToCreateEventPage()
+        {
+            _frameNavigation.ActivateFrameNavigation(typeof(CreateEventPage));
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

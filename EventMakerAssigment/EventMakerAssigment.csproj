@@ -95,12 +95,15 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\FrameNavigationClass.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
     <Compile Include="Handler\EventHandlerClass.cs" />
     <Compile Include="Model\EventCatalogSingleton.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Persistency\PersistencyService.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="View\CreateEventPage.xaml.cs">
       <DependentUpon>CreateEventPage.xaml</DependentUpon>
     </Compile>
