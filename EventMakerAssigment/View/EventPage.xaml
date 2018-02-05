@@ -1,0 +1,36 @@
+﻿<Page
+    x:Class="EventMakerAssigment.View.EventPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EventMakerAssigment.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:EventMakerAssigment.ViewModel"
+    mc:Ignorable="d">
+    <Page.DataContext>
+        <viewModel:EventViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
+        <ListView ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedEvent, Mode=TwoWay}">
+             <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}" Margin="0,0,0,0"></TextBlock>
+                            <TextBlock Text="{Binding Description}" Margin="50,0,0,0"></TextBlock>
+                            <TextBlock Text="{Binding Place}" Margin="100,0,0,0"></TextBlock>
+                            <TextBlock Text="{Binding Id}" Margin="150,0,0,0"></TextBlock>
+                            <TextBlock Text="{Binding Date}" Margin="200,0,0,0"></TextBlock>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Content="ADD" Click="Button_Click"></Button>
+        <Button Margin="100,0,0,0" Content="Delete" Command="{Binding DeleteCommand}"></Button>
+
+    </Grid>
+
+</Page>
