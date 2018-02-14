@@ -6,32 +6,63 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="using:EventMakerAssigment.ViewModel"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Animations.Behaviors"
     mc:Ignorable="d">
-    
+
     <Page.DataContext>
         <viewModel:EventViewModel/>
     </Page.DataContext>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel>
-            <TextBox Text="{Binding Id , Mode=TwoWay}" PlaceholderText="ID"></TextBox>
+
+    <Page.Transitions>
+        <TransitionCollection>
+            <EdgeUIThemeTransition Edge="Right" />
+        </TransitionCollection>
+    </Page.Transitions>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="ms-appx:///Assets/LoginBackground.jpg"/>
+        </Grid.Background>
+
+        <StackPanel Width="700" Margin="0,0,0,0"  Background="#FF474545" Opacity="0.3">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:Blur x:Name="BlurBehavior" 
+                                Value="15" 
+                                Duration="2500" 
+                                Delay="250" 
+                                AutomaticallyStart="True"/>
+            </interactivity:Interaction.Behaviors>
         </StackPanel>
-        <StackPanel Margin="0,50,0,0">
-            <TextBox Text="{Binding Name , Mode=TwoWay}" PlaceholderText="Name"></TextBox>
+
+        <StackPanel x:Name="MainStackPanel" Width="700" Height="1000" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock x:Name="TitleText" Text="Create Your Event" FontSize="75" HorizontalAlignment="Center" FontFamily="Century Gothic" FontWeight="Normal" TextAlignment="Center" Margin="0,200,0,0"></TextBlock>
+
+            
+
+            <StackPanel Margin="0,100,0,0">
+                <TextBox Text="{Binding Id , Mode=TwoWay}" PlaceholderText="ID"></TextBox>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0">
+                <TextBox Text="{Binding Name , Mode=TwoWay}" PlaceholderText="Name"></TextBox>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0">
+                <TextBox Text="{Binding Place , Mode=TwoWay}" PlaceholderText="Place"></TextBox>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0" >
+                <TextBox Text="{Binding Description , Mode=TwoWay}" PlaceholderText="Description"></TextBox>
+            </StackPanel>
+            <StackPanel Margin="0,50,0,0">
+                <DatePicker Date="{Binding Date , Mode=TwoWay}" HorizontalAlignment="Center"></DatePicker>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TimePicker Time="{Binding Time, Mode=TwoWay}" Margin="0,50,0,0" HorizontalAlignment="Center"></TimePicker>
+            </StackPanel>
+
         </StackPanel>
-        <StackPanel Margin="0,100,0,0">
-            <TextBox Text="{Binding Place , Mode=TwoWay}" PlaceholderText="Place"></TextBox>
-        </StackPanel>
-        <StackPanel Margin="0,150,0,0">
-            <TextBox Text="{Binding Description , Mode=TwoWay}" PlaceholderText="Description"></TextBox>
-        </StackPanel>
-        <StackPanel Margin="0,250,0,0">
-            <DatePicker Date="{Binding Date , Mode=TwoWay}"></DatePicker>
-            <TimePicker Time="{Binding Time, Mode=TwoWay}" Margin="0,50,0,0"></TimePicker>
-        </StackPanel>
-        <StackPanel Margin="0,400,0,0">
-           <Button Content="CreateEvent" Command="{Binding AddCommand}"></Button>
-           <Button Content="Back" Click="Button_Click"></Button>
-        </StackPanel>
+
+        <Button x:Name="CreateBtn" Content="CreateEvent" Command="{Binding AddCommand}" Width="200" Height="50" Margin="1040,600,0,0"></Button>
+        <Button x:Name="BackBtn" Content="Back" Click="Button_Click" Width="200" Height="50"  Margin="680,600,0,0"></Button>
 
     </Grid>
 </Page>

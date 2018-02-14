@@ -2,7 +2,7 @@
 
 namespace EventMakerAssigment.Converter
 {
-     class DateTimeConverter
+     public class DateTimeConverter
     {
         #region Constructor(s)
 

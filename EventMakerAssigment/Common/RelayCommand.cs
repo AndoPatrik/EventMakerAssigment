@@ -30,6 +30,10 @@ namespace EventMakerAssigment.Common
             _canExecute = canExecute;
         }
 
+        public RelayCommand(Action<object> doSearch)
+        {
+        }
+
         #endregion
 
         #region Method(s)

@@ -19,13 +19,14 @@ namespace EventMakerAssigment.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         private bool _loginStatus;
         private readonly FrameNavigationClass _frameNavigation;
-
+        
         #endregion
 
         #region Constructor(s)
 
         public LoginViewModel()
         {
+            LoginCommand = new RelayCommand(LoginMethod);
             CurrentUser = new User();
             _frameNavigation = new FrameNavigationClass();
             Users = new ObservableCollection<User>()
@@ -40,6 +41,8 @@ namespace EventMakerAssigment.ViewModel
         #endregion
 
         #region Properties
+
+        public RelayCommand LoginCommand { get; set; }
 
         public ObservableCollection<User> Users { get => _users; set => _users = value; }
         public User CurrentUser
@@ -63,16 +66,17 @@ namespace EventMakerAssigment.ViewModel
             {
                 foreach (User user in Users)
                 {
-                    if (CurrentUser.Id == user.Id && CurrentUser.Password == user.Password )
+                    if (CurrentUser.Id == user.Id && CurrentUser.Password == user.Password)
                     {
                         _loginStatus = true;
-                        _frameNavigation.ActivateFrameNavigation(typeof(EventPage));
+                        _frameNavigation.ActivateFrameNavigation(typeof(MenuPage));
                         break;
                     }
                     if (_loginStatus == false)
                     {
-                        MessageDialog msd = new MessageDialog("Hello", "Insert the correct data");
-                        await msd.ShowAsync();
+                        //MessageDialog msd = new MessageDialog("Hello", "Insert the correct data");
+                        //await msd.ShowAsync();
+                        break;
                     }
                 }
             }

@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
+using Windows.UI.Popups;
 using EventMakerAssigment.Annotations;
 using EventMakerAssigment.Common;
 using EventMakerAssigment.Handler;
@@ -15,11 +17,12 @@ namespace EventMakerAssigment.ViewModel
     {
         #region InstanceFields
 
+        private string _searchForCustomer;
         private readonly FrameNavigationClass _frameNavigation;
         private ObservableCollection<Event> _events;
         private Event _selectedEvent;
         public event PropertyChangedEventHandler PropertyChanged;
-        private EventHandlerClass EventHandler;
+        private readonly EventHandlerClass EventHandler;
         private DateTimeOffset _date;
         private TimeSpan _time;
         private int _id;
@@ -38,6 +41,7 @@ namespace EventMakerAssigment.ViewModel
             _selectedEvent = new Event();
             AddCommand = new RelayCommand(EventHandler.CreateEvent);
             DeleteCommand = new RelayCommand(EventHandler.DeleteEvent);
+            SearchCommand = new RelayCommand(DoSearch);
             BackCommand = new RelayCommand(DoBackToLogin);
             GoToCreatePageCommand = new RelayCommand(NavigateToCreateEventPage);
             _frameNavigation = new FrameNavigationClass();
@@ -51,7 +55,20 @@ namespace EventMakerAssigment.ViewModel
         public RelayCommand GoToCreatePageCommand { get; set; }
         public RelayCommand AddCommand { get; set; }
         public RelayCommand DeleteCommand { get; set; }
+        public RelayCommand SearchCommand { get; set; }
         public ObservableCollection<Event> Events { get => _events; set => _events = value; }
+ 
+        public string SearchForEvent
+        {
+            get => _searchForCustomer;
+            set
+            {
+                _searchForCustomer = value;
+                OnPropertyChanged(SearchForEvent);
+                DoSearch("sd");
+            }
+        }
+
         public Event SelectedEvent
         {
             get => _selectedEvent;
@@ -111,9 +128,31 @@ namespace EventMakerAssigment.ViewModel
 
         #region Method(s)
 
+        public async void DoSearch(object item)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(SearchForEvent))
+                {
+                    Events = EventCatalogSingleton.GetCollection();
+                }
+                else
+                {
+                    Events = EventHandler.SearchInEvents(SearchForEvent);
+                    Events = EventHandler.SearchedEvents;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageDialog msDialog = new MessageDialog(e.ToString() , " error");
+                await msDialog.ShowAsync();
+                throw;
+            }
+        }
+
         public void DoBackToLogin()
         {
-            _frameNavigation.ActivateFrameNavigation(typeof(MainPage));
+            _frameNavigation.ActivateFrameNavigation(typeof(MenuPage));
         }
 
         public void NavigateToCreateEventPage()
